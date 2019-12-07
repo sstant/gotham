@@ -18,7 +18,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "https://inspiring-mestorf-42d1a4.netlify.com",
+  "start_url": "http://inspiring-mestorf-42d1a4.netlify.com",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
