@@ -1,24 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import blockstack from 'blockstack';
 
 function App() {
+
+  const signIn = () => {
+    blockstack.redirectToSignIn();
+  };
+
+  const signOut = () => {
+    blockstack.signUserOut(window.location.origin);
+  };
+
+  const showProfile = profile => {
+    console.log(profile);
+  };
+
+  if (blockstack.isUserSignedIn()) {
+    const userData = blockstack.loadUserData()
+     showProfile(userData.profile)
+   } else if (blockstack.isSignInPending()) {
+     blockstack.handlePendingSignIn()
+     .then(userData => {
+       showProfile(userData.profile)
+     })
+   }
+
+   console.log(blockstack.isUserSignedIn());
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        blockstack.isUserSignedIn() ? (
+          <button onClick={signOut}>Sign Out</button>
+        ) : (
+          <button onClick={signIn}>Sign In w/ Blockstack</button>
+        )
+      }
     </div>
   );
 }
